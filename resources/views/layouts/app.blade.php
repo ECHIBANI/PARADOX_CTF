@@ -133,6 +133,8 @@ body { font-family:'DM Sans',sans-serif; color:var(--cre-text); background:var(-
 .voucher-total-bar { background:#000; color:#fff; padding:.65rem 1rem; border-radius:4px; display:flex; justify-content:space-between; font-weight:700; font-size:1rem; margin-top:.5rem; }
 .sig-line { border-bottom:1px solid #000; height:50px; margin-bottom:.4rem; }
 </style>
+
+<link rel="stylesheet" href="{{ asset('css/ctf.css') }}">
 @yield('extra-css')
 </head>
 <body>
@@ -193,6 +195,8 @@ body { font-family:'DM Sans',sans-serif; color:var(--cre-text); background:var(-
     .catch(error => console.error('Error toggling favorite:', error));
   }
 </script>
+
+<script src="{{ asset('js/ctf.js') }}"></script>
 @yield('scripts')
 </body>
 </html>
