@@ -98,6 +98,11 @@ body{font-family:'DM Sans',sans-serif;color:var(--cre-text);background:var(--cre
             <i class="bi bi-people"></i> Utilisateurs
           </a>
         </li>
+        <li>
+          <a href="{{ route('admin.ctf.index') }}" class="sidebar-link {{ request()->routeIs('admin.ctf*') ? 'active' : '' }}">
+            <i class="bi bi-flag"></i> Gestion CTF
+          </a>
+        </li>
 
         <li>
           <form action="{{ route('logout') }}" method="POST">

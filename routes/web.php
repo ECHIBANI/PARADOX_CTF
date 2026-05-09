@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CtfController;
 
 // ── PUBLIC ──────────────────────────────────────────────────────────────────
 Route::middleware([\App\Http\Middleware\NoAdmin::class])->group(function () {
@@ -59,6 +60,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/utilisateurs',                                 [AdminController::class, 'users'])->name('users');
     Route::patch('/utilisateurs/{user}/bloquer',                [AdminController::class, 'toggleBlock'])->name('users.toggle-block');
     Route::delete('/utilisateurs/{user}',                       [AdminController::class, 'deleteUser'])->name('users.delete');
+
+    // CTF Management
+    Route::prefix('ctf')->name('ctf.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\AdminCtfController::class, 'index'])->name('index');
+        Route::get('/ajouter', [\App\Http\Controllers\AdminCtfController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\AdminCtfController::class, 'store'])->name('store');
+        Route::get('/{challenge}/modifier', [\App\Http\Controllers\AdminCtfController::class, 'edit'])->name('edit');
+        Route::put('/{challenge}', [\App\Http\Controllers\AdminCtfController::class, 'update'])->name('update');
+        Route::patch('/{challenge}/toggle-visibility', [\App\Http\Controllers\AdminCtfController::class, 'toggleVisibility'])->name('toggle-visibility');
+        Route::delete('/{challenge}', [\App\Http\Controllers\AdminCtfController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // ── API (Dashboard AJAX) ───────────────────────────────────────────────────
@@ -67,3 +79,16 @@ Route::prefix('api')->group(function () {
     Route::get('/cars', [\App\Http\Controllers\ApiController::class, 'cars']);
     Route::get('/tracking', [\App\Http\Controllers\ApiController::class, 'tracking']);
 });
+
+// ── CTF MODULE ────────────────────────────────────────────────────────────────
+// Ces routes sont publiques (lecture) mais la soumission du flag sauvegarde
+// les points uniquement pour les utilisateurs connectés.
+Route::prefix('ctf')->name('ctf.')->group(function () {
+    Route::get('/',                              [CtfController::class, 'index'])->name('index');
+    Route::get('/challenges',                    [CtfController::class, 'challenges'])->name('challenges');
+    Route::get('/challenges/{slug}',             [CtfController::class, 'show'])->name('challenge.show');
+    Route::post('/challenges/{slug}/submit',     [CtfController::class, 'submit'])->name('challenge.submit');
+    Route::post('/challenges/{slug}/hint/{hintNumber}', [CtfController::class, 'unlockHint'])->name('challenge.hint.unlock')->middleware('auth');
+    Route::get('/classement',                    [CtfController::class, 'classement'])->name('classement');
+});
+

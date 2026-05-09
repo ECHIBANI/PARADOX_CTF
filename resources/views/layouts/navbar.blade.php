@@ -1,4 +1,4 @@
-﻿<nav class="navbar navbar-pardo navbar-expand-lg sticky-top">
+<nav class="navbar navbar-pardo navbar-expand-lg sticky-top">
   <div class="container align-items-center">
     <a class="navbar-brand" href="{{ route('home') }}">
       <img src="{{ asset('images/logo.png') }}" alt="PARDOX" height="35" style="object-fit: contain;">
@@ -13,6 +13,11 @@
         </li>
         <li class="nav-item">
           <a class="nav-link nav-link-pardo {{ request()->routeIs('vehicles.*') ? 'active' : '' }}" href="{{ route('vehicles.index') }}">Véhicules</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-link-pardo {{ request()->routeIs('ctf.*') ? 'active' : '' }}" href="{{ route('ctf.index') }}">
+            <i class="bi bi-flag me-1"></i>CTF
+          </a>
         </li>
         @auth
           @if(auth()->user()->role === 'user')

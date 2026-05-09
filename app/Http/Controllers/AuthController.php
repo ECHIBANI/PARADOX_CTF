@@ -62,7 +62,7 @@ class AuthController extends Controller
             'password.required' => 'Mot de passe requis.',
         ]);
 
-        $user = User::where('phone', $request->phone)->orWhere('email', $request->phone)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->withErrors(['phone' => 'Identifiants incorrects.'])->withInput(['phone' => $request->phone]);
