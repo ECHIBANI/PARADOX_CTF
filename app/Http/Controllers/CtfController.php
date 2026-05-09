@@ -31,12 +31,11 @@ class CtfController extends Controller
             ->withSum('ctfUnlockedHints', 'penalty')
             ->withCount('ctfScores')
             ->whereHas('ctfScores')
-            ->orWhereHas('ctfUnlockedHints')
             ->get()
             ->map(function ($user) {
                 $scoreBrut = $user->ctf_scores_sum_total_points ?? 0;
                 $penalites = $user->ctf_unlocked_hints_sum_penalty ?? 0;
-                $user->total_points = $scoreBrut - $penalites;
+                $user->total_points = max(0, $scoreBrut - $penalites);
                 $user->solved_count = $user->ctf_scores_count ?? 0;
                 return $user;
             })
@@ -304,20 +303,19 @@ class CtfController extends Controller
      */
     public function classement()
     {
-        // On récupère tous les utilisateurs qui ont soit des scores, soit des indices débloqués
+        // On récupère tous les utilisateurs ayant résolu au moins un challenge
         $players = \App\Models\User::withSum('ctfScores', 'total_points')
             ->withSum('ctfScores', 'bonus_points')
             ->withSum('ctfUnlockedHints', 'penalty')
             ->withCount('ctfScores')
             ->whereHas('ctfScores')
-            ->orWhereHas('ctfUnlockedHints')
             ->get()
             ->map(function ($user) {
                 // Le score final = (Total des points gagnés) - (Total des pénalités des indices)
                 $scoreBrut = $user->ctf_scores_sum_total_points ?? 0;
                 $penalites = $user->ctf_unlocked_hints_sum_penalty ?? 0;
-                
-                $user->total_points = $scoreBrut - $penalites;
+
+                $user->total_points = max(0, $scoreBrut - $penalites);
                 $user->total_bonus  = $user->ctf_scores_sum_bonus_points ?? 0;
                 $user->solved_count = $user->ctf_scores_count ?? 0;
                 return $user;

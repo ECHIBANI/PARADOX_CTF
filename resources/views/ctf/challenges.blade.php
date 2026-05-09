@@ -176,7 +176,7 @@
                             <span class="ctf-tag">CTF</span>
                             <span class="ctf-tag">Cyber</span>
                         </div>
-                        <div class="d-flex gap-2">
+                        <div class="d-flex gap-2 mt-auto pt-2">
                             @if(in_array($challenge->id, $solvedIds))
                             <a href="{{ route('ctf.challenge.show', $challenge->slug) }}" class="ctf-btn-solved flex-fill text-center" id="ctf-view-{{ $challenge->id }}">
                                 <i class="bi bi-check2 me-1"></i> Voir

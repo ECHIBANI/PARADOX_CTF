@@ -200,7 +200,7 @@
                                     <span class="ctf-tag">Cyber</span>
                                 </div>
 
-                                <div class="mt-3">
+                                <div class="mt-auto pt-3">
                                     @if(in_array($challenge->id, $solvedIds))
                                     <a href="{{ route('ctf.challenge.show', $challenge->slug) }}" class="ctf-btn-solved w-100" id="ctf-solved-{{ $challenge->id }}">
                                         <i class="bi bi-check2 me-1"></i> Voir
@@ -230,11 +230,11 @@
                     <div class="ctf-top-player">
                         <div class="ctf-player-rank">
                             @if($index === 0)
-                                <i class="bi bi-trophy-fill" style="color:#f59e0b"></i>
+                                <span class="ctf-lb-rank-badge ctf-lb-gold"><i class="bi bi-trophy-fill"></i> 1</span>
                             @elseif($index === 1)
-                                <i class="bi bi-trophy-fill" style="color:#94a3b8"></i>
+                                <span class="ctf-lb-rank-badge ctf-lb-silver"><i class="bi bi-trophy-fill"></i> 2</span>
                             @else
-                                <i class="bi bi-trophy-fill" style="color:#a16207"></i>
+                                <span class="ctf-lb-rank-badge ctf-lb-bronze"><i class="bi bi-trophy-fill"></i> 3</span>
                             @endif
                         </div>
 
@@ -242,43 +242,16 @@
 
                         <div class="ctf-player-info">
                             <div class="ctf-player-name">{{ $player->name }}</div>
+                            <div style="font-size:.75rem; color:#6b7280;">{{ $player->solved_count }} résolu{{ $player->solved_count != 1 ? 's' : '' }}</div>
                         </div>
 
                         <div class="ctf-player-pts">{{ number_format($player->total_points) }} pts</div>
                     </div>
                     @empty
-                    {{-- Affichage de démonstration si pas encore de joueurs --}}
-                    <div class="ctf-top-player">
-                        <div class="ctf-player-rank">
-                            <i class="bi bi-trophy-fill" style="color:#f59e0b"></i>
-                        </div>
-                        <div class="ctf-player-avatar">N</div>
-                        <div class="ctf-player-info">
-                            <div class="ctf-player-name">NitroMonkey</div>
-                        </div>
-                        <div class="ctf-player-pts">4 250 pts</div>
-                    </div>
-
-                    <div class="ctf-top-player">
-                        <div class="ctf-player-rank">
-                            <i class="bi bi-trophy-fill" style="color:#94a3b8"></i>
-                        </div>
-                        <div class="ctf-player-avatar">0</div>
-                        <div class="ctf-player-info">
-                            <div class="ctf-player-name">0xSpeedy</div>
-                        </div>
-                        <div class="ctf-player-pts">3 750 pts</div>
-                    </div>
-
-                    <div class="ctf-top-player">
-                        <div class="ctf-player-rank">
-                            <i class="bi bi-trophy-fill" style="color:#a16207"></i>
-                        </div>
-                        <div class="ctf-player-avatar">H</div>
-                        <div class="ctf-player-info">
-                            <div class="ctf-player-name">HexRacer</div>
-                        </div>
-                        <div class="ctf-player-pts">3 100 pts</div>
+                    {{-- Même état vide que le classement principal --}}
+                    <div class="ctf-empty-state" style="padding: 1.5rem 0; text-align:center;">
+                        <i class="bi bi-trophy" style="font-size:2rem; color:#ccc; display:block; margin-bottom:.5rem;"></i>
+                        <p style="color:#999; font-size:.85rem; margin:0;">Aucun joueur classé pour l'instant.<br>Soyez le premier à résoudre un challenge !</p>
                     </div>
                     @endforelse
 

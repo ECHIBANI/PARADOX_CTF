@@ -67,19 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const flagForm = document.getElementById('ctf-flag-form');
     if (flagForm) {
         flagForm.addEventListener('submit', function (e) {
-            const input = document.getElementById('ctf-flag-input');
-            if (!input) return;
-            const val = input.value.trim();
-            // Avertissement si format incorrect (sans bloquer)
-            if (val && !val.startsWith('PARDOX{')) {
-                const warn = document.createElement('div');
-                warn.className = 'ctf-result ctf-result-warning mb-2';
-                warn.innerHTML = '<i class="bi bi-exclamation-triangle me-2"></i>Rappel : le flag doit commencer par <strong>PARDOX{</strong>';
-                warn.id = 'ctf-format-warn';
-                input.parentNode.insertBefore(warn, input);
-                setTimeout(function () {
-                    document.getElementById('ctf-format-warn')?.remove();
-                }, 4000);
+            const btn = document.getElementById('ctf-flag-submit');
+            if (btn) {
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Vérification...';
+                btn.disabled = true;
             }
         });
     }

@@ -208,11 +208,22 @@
                         <div class="ctf-pts-label">bonus multiplicateur</div>
                     </div>
                     @endif
+                    @if(($flagResult['penalty'] ?? 0) > 0)
+                    <div class="ctf-pts-sep" style="color:#dc2626;">−</div>
+                    <div class="ctf-pts-item">
+                        <div class="ctf-pts-icon" style="color:#dc2626;"><i class="bi bi-eye-slash-fill"></i></div>
+                        <div class="ctf-pts-num" style="color:#dc2626;">{{ $flagResult['penalty'] }}</div>
+                        <div class="ctf-pts-label" style="color:#dc2626;">pénalité indices</div>
+                    </div>
+                    @endif
                     <div class="ctf-pts-sep">=</div>
                     <div class="ctf-pts-item ctf-pts-total">
                         <div class="ctf-pts-icon ctf-pts-icon-trophy"><i class="bi bi-trophy-fill"></i></div>
-                        <div class="ctf-pts-num ctf-pts-total-num">{{ $flagResult['total_points'] ?? $flagResult['points'] }} pts</div>
-                        <div class="ctf-pts-label ctf-pts-total-label">au total</div>
+                        @php
+                            $netTotal = ($flagResult['total_points'] ?? $flagResult['points']) - ($flagResult['penalty'] ?? 0);
+                        @endphp
+                        <div class="ctf-pts-num ctf-pts-total-num">{{ max(0, $netTotal) }} pts</div>
+                        <div class="ctf-pts-label ctf-pts-total-label">nets gagnés</div>
                     </div>
                 </div>
 
@@ -532,7 +543,13 @@
                     </div>
                     <div class="ctf-info-row">
                         <span class="ctf-info-label"><i class="bi bi-star me-2"></i>Points</span>
-                        <span class="ctf-info-value ctf-meta-blue fw-bold">{{ $challenge->points }} pts</span>
+                        <span class="ctf-info-value ctf-meta-blue fw-bold">
+                            {{ $challenge->points }} pts
+                            @if($totalPenalty > 0)
+                                <span style="color:#dc2626; font-size:.75rem; font-weight:600; display:block;">−{{ $totalPenalty }} pts (indices)</span>
+                                <span style="color:#16a34a; font-size:.8rem; font-weight:700; display:block;">= {{ max(0, $challenge->points - $totalPenalty) }} pts nets</span>
+                            @endif
+                        </span>
                     </div>
                     <div class="ctf-info-row">
                         <span class="ctf-info-label"><i class="bi bi-check-circle me-2"></i>Statut</span>
