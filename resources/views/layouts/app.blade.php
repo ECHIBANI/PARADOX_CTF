@@ -134,7 +134,7 @@ body { font-family:'DM Sans',sans-serif; color:var(--cre-text); background:var(-
 .sig-line { border-bottom:1px solid #000; height:50px; margin-bottom:.4rem; }
 </style>
 
-<link rel="stylesheet" href="{{ asset('css/ctf.css') }}">
+<link rel="stylesheet" href="/css/ctf.css?v=20260509">
 @yield('extra-css')
 </head>
 <body>
@@ -196,7 +196,7 @@ body { font-family:'DM Sans',sans-serif; color:var(--cre-text); background:var(-
   }
 </script>
 
-<script src="{{ asset('js/ctf.js') }}"></script>
+<script src="/js/ctf.js?v=20260509"></script>
 @yield('scripts')
 </body>
 </html>

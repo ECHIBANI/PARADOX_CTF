@@ -2,7 +2,7 @@
 @section('title', 'PARDOX CTF — Challenges Cybersécurité Automobile')
 
 @section('extra-css')
-<link rel="stylesheet" href="{{ url('/css/ctf.css') }}?v={{ time() }}">
+<link rel="stylesheet" href="/css/ctf.css?v=20260509">
 <style>
     .ctf-card,
     .ctf-sidebar-card,
@@ -368,5 +368,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ url('/js/ctf.js') }}?v={{ time() }}"></script>
+<script src="/js/ctf.js?v=20260509"></script>
 @endsection
