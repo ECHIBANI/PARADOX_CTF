@@ -23,3 +23,8 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+id_ed25519
+id_rsa
+*.pem
+*.key
+.env
